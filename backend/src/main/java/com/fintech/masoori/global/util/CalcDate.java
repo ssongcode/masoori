@@ -56,6 +56,35 @@ public class CalcDate {
 		return StartEndDate.builder().startDate(startOfLastMonth).endDate(endOfLastMonth).build();
 	}
 
+	public static StartEndDate calcLastMonth(LocalDateTime date){
+		LocalDateTime endOfLastMonth = date.with(TemporalAdjusters.firstDayOfMonth()).minusDays(1);
+		LocalDateTime startOfLastMonth = endOfLastMonth.with(TemporalAdjusters.firstDayOfMonth());
+		return StartEndDate.builder().startDate(startOfLastMonth).endDate(endOfLastMonth).build();
+	}
+
+	public static StartEndDate calcMonth(){
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime startOfMonth = LocalDateTime.of(now.getYear(), now.getMonthValue(), 1, 0, 0, 0);
+		LocalDateTime endOfMonth = LocalDateTime.of(now.getYear(), now.getMonthValue(), now.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth(), 23, 59, 59);
+		return StartEndDate.builder().startDate(startOfMonth).endDate(endOfMonth).build();
+	}
+
+	public static StartEndDate calcMonth(LocalDateTime date){
+		LocalDateTime startOfMonth = LocalDateTime.of(date.getYear(), date.getMonthValue(), 1, 0, 0, 0);
+		LocalDateTime endOfMonth = LocalDateTime.of(date.getYear(), date.getMonthValue(), date.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth(), 23, 59, 59);
+		return StartEndDate.builder().startDate(startOfMonth).endDate(endOfMonth).build();
+	}
+
+	public static StartEndDate calcThisWeek(LocalDateTime date){
+		LocalDateTime monday = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+		LocalDateTime sunday = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+		LocalDateTime startDate = LocalDateTime.of(monday.getYear(), monday.getMonth(), monday.getDayOfMonth(), 0, 0,
+			0);
+		LocalDateTime endDate = LocalDateTime.of(sunday.getYear(), sunday.getMonth(), sunday.getDayOfMonth(), 23, 59,
+			59);
+		return StartEndDate.builder().startDate(startDate).endDate(endDate).build();
+	}
+
 	@Data
 	@Getter
 	@Builder

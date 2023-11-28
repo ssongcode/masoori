@@ -13,6 +13,8 @@ public interface MonthlySpendingAnalyticsService {
 	 */
 	MonthlySpendingAnalyticsRes selectAll(String userEmail, LocalDateTime time);
 
-	// void saveMonthlySpendingAnalytics(MonthlySpendingAndCreditcard monthlySpendingAndCreditcard);
+	void saveMonthlySpendingAnalytics(MonthlySpendingAndCreditcard monthlySpendingAndCreditcard);
+
+	void updateCreatedDateAnalytics(MonthlySpendingAndCreditcard monthlySpendingAndCreditcard);
 
 }
